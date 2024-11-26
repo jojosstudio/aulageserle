@@ -21,6 +21,16 @@
             color: white;
             text-align: center;
             padding: 40px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
         }
 
         header h1 {
@@ -31,6 +41,11 @@
         header p {
             font-size: 1.2rem;
             margin-top: 10px;
+        }
+
+        /* Platzhalter für den Header */
+        .header-placeholder {
+            height: 100px; /* gleiche Höhe wie der Header */
         }
 
         /* Main Content */
@@ -96,10 +111,11 @@
     </style>
 </head>
 <body>
-    <header>
+    <header id="main-header">
         <h1>Willkommen in der Aula der Gesamtschule Erle</h1>
         <p>Entdecken Sie die Ausstattung und Möglichkeiten für Ihre Veranstaltungen.</p>
     </header>
+    <div class="header-placeholder"></div> <!-- Platzhalter für den Header -->
 
     <main>
         <div class="content">
@@ -133,6 +149,24 @@
         var t = d.getElementsByTagName("script")[0];
         t.parentNode.insertBefore(s, t);
         d.write("<div id='zsiqwidget'></div>");
+    </script>
+
+    <!-- JavaScript für Scroll-Interaktion -->
+    <script>
+        let lastScroll = 0;
+        const header = document.getElementById('main-header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('hidden'); // Header ausblenden
+            } else {
+                header.classList.remove('hidden'); // Header einblenden
+            }
+
+            lastScroll = currentScroll;
+        });
     </script>
 </body>
 </html>
