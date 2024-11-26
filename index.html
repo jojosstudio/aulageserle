@@ -3,53 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aktuelles Lied</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="sidebar">
-        <h3>Navigation</h3>
-        <ul>
-            <li><a href="add.html">Zum Liedwunsch</a></li>
-            <li><a href="admin.html">Admin-Bereich</a></li>
-        </ul>
-    </div>
-    <div class="content">
-        <div class="spotify-embed">
-            <img id="albumCover" src="default-cover.jpg" alt="Album Cover">
-            <h2 id="currentSongTitle">Lade Lied...</h2>
-            <p id="currentSongArtist">Künstler</p>
-            <a id="currentSongLink" href="#" target="_blank">Jetzt anhören</a>
-        </div>
-    </div>
-    <script>
-        const serverUrl = 'http://109.71.254.139:25567';
-
-        function loadCurrentSong() {
-            fetch(`${serverUrl}/songs`)
-                .then(response => response.json())
-                .then(songs => {
-                    if (songs.length > 0) {
-                        const song = songs[0];
-                        document.getElementById('currentSongTitle').textContent = song.title;
-                        document.getElementById('currentSongArtist').textContent = song.artist || 'Unbekannter Künstler';
-                        document.getElementById('albumCover').src = song.cover || 'default-cover.jpg';
-                        document.getElementById('currentSongLink').href = song.link;
-                    } else {
-                        document.getElementById('currentSongTitle').textContent = 'Keine Lieder verfügbar';
-                        document.getElementById('currentSongArtist').textContent = '';
-                        document.getElementById('currentSongLink').style.display = 'none';
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('currentSongTitle').textContent = 'Fehler beim Laden des Liedes';
-                    document.getElementById('currentSongArtist').textContent = '';
-                    document.getElementById('currentSongLink').style.display = 'none';
-                });
+    <title>Aula-Anlage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
         }
 
-        // Lade das aktuelle Lied beim Start
-        loadCurrentSong();
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Willkommen in der Aula</h1>
+        <p>Hier können Sie unsere Anlage und Ausstattung kennenlernen.</p>
+    </header>
+
+    <main>
+        <div class="content">
+            <h2>Unsere Anlage</h2>
+            <img src="anlage.jpg" alt="Bild der Anlage" />
+            <p>Erleben Sie professionelle Multimedia-Technik für Events, Vorträge und mehr.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Gesamtschule Erle. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <!-- Zoho SalesIQ Script -->
+    <script type="text/javascript">
+        var $zoho = $zoho || {};
+        $zoho.salesiq = $zoho.salesiq || {
+            widgetcode: "siqbda2ed95fcdf2371de60fa3968f3d220ef2a6a2354027b1a141ce8eea413b483",
+            values: {},
+            ready: function () {}
+        };
+        var d = document;
+        var s = d.createElement("script");
+        s.type = "text/javascript";
+        s.id = "zsiqscript";
+        s.defer = true;
+        s.src = "https://salesiq.zoho.eu/widget";
+        var t = d.getElementsByTagName("script")[0];
+        t.parentNode.insertBefore(s, t);
+        d.write("<div id='zsiqwidget'></div>");
     </script>
 </body>
 </html>
