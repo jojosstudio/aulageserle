@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css">
     <link rel="icon" type="image/x-icon" href="logos/favicon.png">
     <style>
-        
         /* Grundlegende Stile */
         body {
             font-family: 'Roboto', sans-serif;
@@ -16,11 +15,12 @@
             background: #f0f4f8;
             color: #333;
             line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* Header */
         header {
-            background: linear-gradient(to right, #4caf50, #388e3c);
+            background: rgba(76, 175, 80, 0.8);
             color: white;
             text-align: center;
             padding: 40px 20px;
@@ -29,7 +29,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, background 0.3s ease;
         }
 
         header.hidden {
@@ -41,14 +41,8 @@
             margin: 0;
         }
 
-        header p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        /* Platzhalter für den Header */
         .header-placeholder {
-            height: 100px;
+            height: 120px; /* Platzhalter für die tatsächliche Höhe des Headers */
         }
 
         /* Sektionen */
@@ -56,14 +50,6 @@
             padding: 60px 20px;
             max-width: 1200px;
             margin: 0 auto;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .section-title {
@@ -73,18 +59,52 @@
             text-align: center;
         }
 
-        .section-content {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #555;
+        /* Boxen */
+        .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        .section-content img {
-            max-width: 80%;
-            height: auto;
+        .box {
+            background-size: cover;
+            background-position: center;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            height: 180px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white; /* Für bessere Lesbarkeit */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Individuelle Box-Hintergründe */
+        .box-sound {
+            background-image: url('logos/sound-bg.jpg');
+        }
+
+        .box-projektor {
+            background-image: url('logos/projektor-bg.jpg');
+        }
+
+        .box-bühne {
+            background-image: url('logos/bühne-bg.jpg');
+        }
+
+        .box img {
+            display: none; /* Bilder innerhalb der Box ausblenden */
         }
 
         /* Footer */
@@ -95,6 +115,8 @@
             padding: 20px;
             font-size: 0.9rem;
             margin-top: 40px;
+            transition: background 0.3s ease;
+            position: relative;
         }
 
         footer a {
@@ -106,135 +128,123 @@
             text-decoration: underline;
         }
 
-        /* Responsivität */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
+        .theme-toggle {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            outline: none;
+            z-index: 1100;
+        }
 
-            .section-content img {
-                max-width: 100%;
+        /* Dunkler Modus */
+        body.dark {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark .box {
+            background-color: #1e1e1e; /* Optionaler Fallback */
+        }
+
+        body.dark footer {
+            background: #1e1e1e;
+        }
+
+        body.dark .section-title {
+            color: #81c784;
+        }
+
+        @media (max-width: 768px) {
+            .box {
+                width: 100%;
+            }
+            .theme-toggle {
+                right: 10px;
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <script type="module" src="cookieconsent-config.js"></script>
     <header id="main-header">
         <h1>Willkommen in der Aula der Gesamtschule Erle</h1>
     </header>
     <div class="header-placeholder"></div>
 
     <!-- Startseite -->
-    <section class="fade-in">
-        <h2 class="section-title">Unsere moderne Anlage</h2>
-        <div class="section-content">
-            <img src="logos/anlage.jpg" alt="Bild der Aula-Anlage">
-            <p>
-                Die Aula ist mit modernster Multimedia-Technik ausgestattet. Sie eignet sich perfekt für Schulveranstaltungen,
-                Konferenzen, Theateraufführungen und vieles mehr. Buchen Sie Ihre nächste Veranstaltung bei uns!
-            </p>
+    <section>
+        <h2 class="section-title">Unsere moderne Ausstattung</h2>
+        <div class="box-container">
+            <div class="box box-sound">
+                <h3>High-End Soundsystem</h3>
+                <p>Perfekte Akustik für jede Veranstaltung.</p>
+            </div>
+            <div class="box box-projektor">
+                <h3>Modernste Projektoren</h3>
+                <p>Klare und helle Bilder in jeder Umgebung.</p>
+            </div>
+            <div class="box box-bühne">
+                <h3>Flexible Bühnenausstattung</h3>
+                <p>Individuelle Gestaltungsmöglichkeiten.</p>
+            </div>
         </div>
     </section>
+    <section>
+        <h2 class="section-title">Kontaktieren Sie uns</h2>
+        <div class="box-container">
+            <div class="box">
+                <h3>Adresse</h3>
+                <p>Gesamtschule Erle<br>Mühlbachstraße 3, 45891 Erle</p>
+            </div>
+            <div class="box">
+                <h3>Telefon</h3>
+                <p>keine/p>
+            </div>
+            <div class="box">
+                <h3>E-Mail</h3>
+                <p>soundteamges-erle@zohomail.eu</p>
+            </div>
+        </div>
+    </section>
+    
 
-    <!-- Über uns -->
-    <section class="fade-in">
-        <h2 class="section-title">Über uns</h2>
-        <div class="section-content">
-            <img src="logos/überuns.jpg" alt="Bild der Aula-Anlage">
-            <p>
-                Die Aula der Gesamtschule Erle ist ein zentraler Treffpunkt für Bildung und Kultur. Unsere Mission ist es, Schüler*innen,
-                Lehrer*innen und der Gemeinschaft einen erstklassigen Veranstaltungsort zur Verfügung zu stellen.
-            </p>
-        </div>
-    </section>
-
-    <!-- Leistungen -->
-    <section class="fade-in">
-        <h2 class="section-title">Unsere Leistungen</h2>
-        <div class="section-content">
-            <img src="logos/leistungen.jpg" alt="Bild der Aula-Anlage">
-            <p>
-                Wir bieten: 
-                <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto;">
-                    <li>✓ High-End-Soundsysteme</li>
-                    <li>✓ Modernste Beamer- und Projektortechnik</li>
-                    <li>✓ Flexible Bühnenausstattung</li>
-                    <li>✓ Technische Unterstützung durch erfahrene Mitarbeiter</li>
-                </ul>
-            </p>
-        </div>
-    </section>
-
-    <!-- Kontakt -->
-    <section class="fade-in">
-        <h2 class="section-title">Kontakt</h2>
-        <div class="section-content">
-            <p>
-                Haben Sie Fragen oder möchten Sie eine Buchung vornehmen? Kontaktieren Sie uns unter: 
-            </p>
-            <p>
-                <a href="https://salesiq.zohopublic.eu/signaturesupport.ls?widgetcode=siqbda2ed95fcdf2371de60fa3968f3d220ef2a6a2354027b1a141ce8eea413b483" target="_blank" rel="noopener noreferrer"><img src="https://salesiq.zohopublic.eu/visitor/v2/channels/emailsignature/sticker?widgetcode=siqbda2ed95fcdf2371de60fa3968f3d220ef2a6a2354027b1a141ce8eea413b483"/></a> 
-            </p>
-        </div>
-    </section>
 
     <footer>
         <p>&copy; 2024 Gesamtschule Erle. <a href="#">Datenschutz</a> | <a href="#">Impressum</a></p>
+        <button class="theme-toggle" id="theme-toggle" title="Modus wechseln">☀️</button>
     </footer>
 
-    <!-- Zoho SalesIQ Script -->
-    <script type="text/javascript">
-        var $zoho = $zoho || {};
-        $zoho.salesiq = $zoho.salesiq || {
-            widgetcode: "siqbda2ed95fcdf2371de60fa3968f3d220ef2a6a2354027b1a141ce8eea413b483",
-            values: {},
-            ready: function () {}
-        };
-        var d = document;
-        var s = d.createElement("script");
-        s.type = "text/javascript";
-        s.id = "zsiqscript";
-        s.defer = true;
-        s.src = "https://salesiq.zoho.eu/widget";
-        var t = d.getElementsByTagName("script")[0];
-        t.parentNode.insertBefore(s, t);
-        d.write("<div id='zsiqwidget'></div>");
-    </script>
-
-    <!-- JavaScript für Scroll-Interaktion -->
     <script>
-        // Header ein-/ausblenden
-        let lastScroll = 0;
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
         const header = document.getElementById('main-header');
+        let lastScrollY = 0;
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                header.classList.add('hidden'); // Header ausblenden
+        // Toggle Theme
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                themeToggle.textContent = '🌙';
             } else {
-                header.classList.remove('hidden'); // Header einblenden
+                themeToggle.textContent = '☀️';
             }
-
-            lastScroll = currentScroll;
         });
 
-        // Inhalte beim Scrollen einblenden
-        const sections = document.querySelectorAll('.fade-in');
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-
-        sections.forEach((section) => observer.observe(section));
+        // Header ein- und ausfahren
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
     </script>
 </body>
 </html>
