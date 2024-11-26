@@ -45,38 +45,43 @@
 
         /* Platzhalter für den Header */
         .header-placeholder {
-            height: 100px; /* gleiche Höhe wie der Header */
+            height: 100px;
         }
 
-        /* Main Content */
-        main {
-            padding: 40px 20px;
+        /* Sektionen */
+        section {
+            padding: 60px 20px;
             max-width: 1200px;
             margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .content {
-            text-align: center;
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .content h2 {
+        .section-title {
             font-size: 2rem;
             margin-bottom: 20px;
             color: #4caf50;
+            text-align: center;
         }
 
-        .content img {
+        .section-content {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .section-content img {
             max-width: 80%;
             height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin: 20px 0;
-        }
-
-        .content p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 40px;
         }
 
         /* Footer */
@@ -104,7 +109,7 @@
                 font-size: 2rem;
             }
 
-            .content img {
+            .section-content img {
                 max-width: 100%;
             }
         }
@@ -115,18 +120,57 @@
         <h1>Willkommen in der Aula der Gesamtschule Erle</h1>
         <p>Entdecken Sie die Ausstattung und Möglichkeiten für Ihre Veranstaltungen.</p>
     </header>
-    <div class="header-placeholder"></div> <!-- Platzhalter für den Header -->
+    <div class="header-placeholder"></div>
 
-    <main>
-        <div class="content">
-            <h2>Unsere moderne Anlage</h2>
+    <!-- Startseite -->
+    <section class="fade-in">
+        <h2 class="section-title">Unsere moderne Anlage</h2>
+        <div class="section-content">
             <img src="anlage.jpg" alt="Bild der Aula-Anlage">
             <p>
                 Die Aula ist mit modernster Multimedia-Technik ausgestattet. Sie eignet sich perfekt für Schulveranstaltungen,
                 Konferenzen, Theateraufführungen und vieles mehr. Buchen Sie Ihre nächste Veranstaltung bei uns!
             </p>
         </div>
-    </main>
+    </section>
+
+    <!-- Über uns -->
+    <section class="fade-in">
+        <h2 class="section-title">Über uns</h2>
+        <div class="section-content">
+            <p>
+                Die Aula der Gesamtschule Erle ist ein zentraler Treffpunkt für Bildung und Kultur. Unsere Mission ist es, Schüler*innen,
+                Lehrer*innen und der Gemeinschaft einen erstklassigen Veranstaltungsort zur Verfügung zu stellen.
+            </p>
+        </div>
+    </section>
+
+    <!-- Leistungen -->
+    <section class="fade-in">
+        <h2 class="section-title">Unsere Leistungen</h2>
+        <div class="section-content">
+            <p>
+                Wir bieten: 
+                <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>✓ High-End-Soundsysteme</li>
+                    <li>✓ Modernste Beamer- und Projektortechnik</li>
+                    <li>✓ Flexible Bühnenausstattung</li>
+                    <li>✓ Technische Unterstützung durch erfahrene Mitarbeiter</li>
+                </ul>
+            </p>
+        </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section class="fade-in">
+        <h2 class="section-title">Kontakt</h2>
+        <div class="section-content">
+            <p>
+                Haben Sie Fragen oder möchten Sie eine Buchung vornehmen? Kontaktieren Sie uns unter: 
+                <strong>info@gesamtschule-erle.de</strong>
+            </p>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2024 Gesamtschule Erle. <a href="#">Datenschutz</a> | <a href="#">Impressum</a></p>
@@ -153,6 +197,7 @@
 
     <!-- JavaScript für Scroll-Interaktion -->
     <script>
+        // Header ein-/ausblenden
         let lastScroll = 0;
         const header = document.getElementById('main-header');
 
@@ -167,6 +212,22 @@
 
             lastScroll = currentScroll;
         });
+
+        // Inhalte beim Scrollen einblenden
+        const sections = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        sections.forEach((section) => observer.observe(section));
     </script>
 </body>
 </html>
